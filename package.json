@@ -1,0 +1,26 @@
+{
+  "name": "runmap",
+  "version": "1.0.0",
+  "description": "frontend to show your runmap with uploaded gpx file",
+  "main": "",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "less": "^2.7.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbcdef/iRunMap.git"
+  },
+  "author": "gbcdef",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gbcdef/iRunMap/issues"
+  },
+  "homepage": "https://github.com/gbcdef/iRunMap#readme"
+}

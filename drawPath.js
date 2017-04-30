@@ -1,8 +1,8 @@
 'use strict';
-
-var map = new AMap.Map('container', {
+// SJTU lng=121.433951&lat=31.199027
+var map = new AMap.Map('map-container', {
     zoom: 12,
-    center: [121, 31],
+    center: [121.433951, 31.199027],
     mapStyle: 'dark',
     features: ['bg'] 
 });
