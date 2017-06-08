@@ -7,13 +7,16 @@ var map = new AMap.Map('map-container', {
     features: ['bg']
 });
 
-var test
+var recordNum = 0
 
 $(document).ready(function() {
     $('#clear').on('click', (function() {
-        map.clearMap();
+        map.clearMap()
+        recordNum = 0
     }));
     $('#file').on('change', function() {
+        recordNum += this.files.length
+
         for (var i = 0; i < this.files.length; i++) {
             var f = this.files[i]
             var filePath = window.URL.createObjectURL(f);
@@ -24,7 +27,7 @@ $(document).ready(function() {
                 // 成功回调
                 success: function(data) {
                     var points = parseGPX(data)
-                    //把所有轨迹点串成一条线并绘制在地图上
+                        //把所有轨迹点串成一条线并绘制在地图上
                     var lineArr = new Array()
                     for (var i = 0; i < points.length; i++) {
                         lineArr.push(new AMap.LngLat(points[i].lon, points[i].lat))
@@ -37,10 +40,10 @@ $(document).ready(function() {
                         })
                         polyline.setMap(map)
                     }
-
+                    // $('#msg').html('处理完成，累计绘制'+recordNum+'条记录')
                 }
             })
-
+            $('#msg').html('处理中...')
         }
     })
 })
@@ -49,18 +52,17 @@ $(document).ready(function() {
 function parseGPX(xml) {
     var points = [];
     var trkpts = xml.getElementsByTagName('trkpt')
-    //记录点过于密集对性能有影响，步进值改为5
-    for (var i = 0; i < trkpts.length; i+=5) {
+        //记录点过于密集对性能有影响，步进值改为5
+    for (var i = 0; i < trkpts.length; i += 5) {
         var trkpt = trkpts[i];
         var p = {
                 lat: parseFloat(trkpt.getAttribute('lat')),
                 lon: parseFloat(trkpt.getAttribute('lon')),
             }
-        //gpx中使用lat=0 lon=0来代表暂停，需要剔除
+            //gpx中使用lat=0 lon=0来代表暂停，需要剔除
         if (p.lat != 0 && p.lon != 0) {
             points.push(p)
         }
     }
     return points
-
 }
