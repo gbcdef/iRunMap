@@ -32,6 +32,9 @@ gulp.task('js', function() {
 gulp.task('html', function() {
     gulp.src('src/*.html')
         .pipe(gulp.dest('dist'))
+
+    gulp.src('src/assets/*')
+        .pipe(gulp.dest('dist/assets'))
 })
 
 gulp.task('default', function() {
