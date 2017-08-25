@@ -30,6 +30,9 @@ $(document).ready(function() {
                     var points = parseGPX(data)
                     $('#msg').html('处理完成，累计绘制' + recordNum + '条记录')
                         //把所有轨迹点串成一条线并绘制在地图上
+                    if (points.length > 0) {
+                        map.setCenter(new AMap.LngLat(points[0].lon, points[0].lat))
+                    }
                     var lineArr = new Array()
                     for (var i = 0; i < points.length; i++) {
                         lineArr.push(new AMap.LngLat(points[i].lon, points[i].lat))
