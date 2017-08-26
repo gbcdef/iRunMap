@@ -1,48 +1,82 @@
-var gulp = require('gulp'),
-    less = require('gulp-less'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleanCSS = require('gulp-clean-css'),
-    del = require('del'),
-    rename = require('gulp-rename'),
-    uglify = require('gulp-uglify'),
-    plumber = require('gulp-plumber')
+const gulp = require('gulp')
+const less = require('gulp-less')
+const autoprefixer = require('gulp-autoprefixer')
+const cleanCSS = require('gulp-clean-css')
+const del = require('del')
+const rename = require('gulp-rename')
+const uglify = require('gulp-uglify')
+const plumber = require('gulp-plumber')
+const browserSync = require('browser-sync')
 
+const config = {
+    js:{
+        src: 'src/js/*',
+        dest: 'dist/js/',
+    },
+    less: {
+        src: 'src/less/*',
+        dest: 'dist/css/'
+    },
+    html:{
+        src: 'src/*.html',
+        dest: 'dist/',
+    },
+    vendor: {
+        src: 'src/vendor/*',
+        dest: 'dist/vendor/'
+    },
+    assets:{
+        src:'src/assets/*',
+        dest:'dist/assets'
+    }
+}
+
+gulp.task('clean', function(){
+    del('dist')
+})
 
 gulp.task('less', function() {
-    gulp.src('src/less/*.less')
+    gulp.src(config.less.src)
         .pipe(plumber())
         .pipe(less())
         .pipe(autoprefixer())
         .pipe(cleanCSS())
         .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest(config.less.dest))
 })
 
 gulp.task('js', function() {
-    gulp.src('src/js/*.js')
+    gulp.src(config.js.src)
         .pipe(plumber())
         .pipe(uglify())
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest('dist/js'))
-
-    gulp.src('src/js/vendor/*.js')
-        .pipe(gulp.dest('dist/js/vendor'))
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest(config.js.dest))
 })
 
 gulp.task('html', function() {
-    gulp.src('src/*.html')
-        .pipe(gulp.dest('dist'))
-
-    gulp.src('src/assets/*')
-        .pipe(gulp.dest('dist/assets'))
+    gulp.src(config.html.src)
+        .pipe(gulp.dest(config.html.dest))
 })
 
-gulp.task('default', function() {
-    gulp.start('html', 'js', 'less')
+gulp.task('vendorAssets', function(){
+    gulp.src(config.assets.src)
+        .pipe(gulp.dest(config.assets.dest))
+
+    gulp.src(config.vendor.src)
+        .pipe(gulp.dest(config.vendor.dest))
 })
 
-gulp.task('watch', function() {
-    gulp.watch('src/**/*.js', ['js'])
-    gulp.watch('src/**/*.html', ['html'])
-    gulp.watch('src/**/*.less', ['less'])
+gulp.task('browser', function(){
+    browserSync.init({
+        server: {
+            baseDir: './dist'
+        }
+    })
+})
+
+gulp.task('default', ['html', 'js', 'less', 'vendorAssets'], function() {
+    gulp.watch(config.js.src, ['js'])
+    gulp.watch(config.html.src, ['html'])
+    gulp.watch(config.less.src, ['less'])
+    gulp.start('browser')
 })

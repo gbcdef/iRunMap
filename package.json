@@ -4,10 +4,11 @@
   "description": "frontend to show your runmap with uploaded gpx file",
   "main": "",
   "dependencies": {
-    "jquery": "^3.2.1",
-    "less": "^2.7.2"
+    "coordtransform": "^2.1.2",
+    "jquery": "^3.2.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.13",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
@@ -15,7 +16,8 @@
     "gulp-less": "^3.3.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "webpack": "^3.5.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
