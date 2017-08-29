@@ -67,7 +67,12 @@ function parseGPX(xml) {
         }
         //gpx中使用lat=0 lon=0来代表暂停，需要剔除
         if (p.lat != 0 && p.lon != 0) {
-            points.push(p)
+            var gcjloc = transformFromWGSToGCJ(p.lon, p.lat);
+            var loc = {
+                lat: gcjloc.lat,
+                lon: gcjloc.lng,
+            }
+            points.push(loc)
         }
     }
     return points
