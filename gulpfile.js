@@ -80,3 +80,7 @@ gulp.task('default', ['html', 'js', 'less', 'vendorAssets'], function() {
     gulp.watch(config.less.src, ['less'])
     gulp.start('browser')
 })
+
+gulp.task('build', ['clean'], function() {
+    gulp.start('html', 'js', 'less', 'vendorAssets')
+})
