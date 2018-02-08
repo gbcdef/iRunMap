@@ -4,5 +4,5 @@
 采用了高德地图提供的SDK。
 
 # Demo
-[查看Demo](http://gbcdef.info/iRunMap)
+[查看Demo](http://gbcdef.github.io/iRunMap)
 ![](demo.png)
