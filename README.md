@@ -1,18 +1,12 @@
-# test
+# iRunMap
+在各大跑步设备和平台中将跑步记录以GPX形式导出后，上传绘制在同一张地图内,看看跑过了哪些地方。
 
-> '
+采用了高德地图提供的SDK。
 
-## Build Setup
+# Demo
+[查看Demo](http://gbcdef.github.io/iRunMap)
+![](demo.png)
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# History
+2018-08-12
+* 使用vue重构
