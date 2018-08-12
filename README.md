@@ -4,7 +4,7 @@
 采用了高德地图提供的SDK。
 
 # Demo
-[查看Demo](http://gbcdef.github.io/iRunMap)
+[查看Demo](http://pages.guibinspace.com/iRunMap)
 ![](demo.png)
 
 # Dev
@@ -22,3 +22,5 @@ npm run build
 # History
 2018-08-12
 * 使用vue重构，原来使用gulp作为构建工具的jquery版本保存到raw-js-with-gulp分支下
+* 修复轨迹透明度设置无效的上古bug
+* 调试好了webpack.config.js自动构建
