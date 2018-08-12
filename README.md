@@ -7,6 +7,18 @@
 [查看Demo](http://gbcdef.github.io/iRunMap)
 ![](demo.png)
 
+# Dev
+
+开发：
+```
+npm install
+npm run dev
+```
+构建：
+```
+npm run build
+```
+
 # History
 2018-08-12
 * 使用vue重构，原来使用gulp作为构建工具的jquery版本保存到raw-js-with-gulp分支下
