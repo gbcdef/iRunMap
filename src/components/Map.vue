@@ -13,42 +13,35 @@
 </template>
 
 <script>
-import parseGPX from "../helpers/parseGPX.js";
+import drawGPXFile from "../drawer";
 let log = console.log.bind(this);
+import mapStyle from "../config/mapStyle";
 
 export default {
-  data: function() {
+  data() {
     return {
-      // 跑步轨迹记录的数量
-      recordNum: 0,
       msg: ""
     };
   },
 
-  mounted: function() {
+  mounted() {
     // 没办法，不想用vue-amap，直接操作DOM吧
-    window.amap = new AMap.Map("map-container", {
-      zoom: 12,
-      center: [121.433951, 31.199027],
-      mapStyle: "dark",
-      features: ["bg", "road"]
-    });
+    window.amap = new AMap.Map("map-container", mapStyle);
   },
 
   methods: {
     // 清空地图并重置计数
-    clearTracks: function() {
+    clearTracks() {
       window.amap.clearMap();
-      this.recordNum = 0;
-      this.msg = "cleared";
+      this.msg = "轨迹已清除";
     },
 
-    drawTracks: function() {
+    drawTracks() {
       let files = document.getElementById("file").files;
       let map = window.amap;
-      this.recordNum += files.length;
+      let recordNum = files.length;
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < recordNum; i++) {
         let f = files[i];
 
         // 通过xhr读取本地文件时，先生成文件的URL
@@ -57,32 +50,17 @@ export default {
         // 通过HTML5 API读取文件
         let reader = new FileReader();
         reader.readAsText(f);
-        reader.onload = function() {
-          let points = parseGPX(this.result);
 
-          this.msg = ["处理完成，累计绘制", this.recordNum, "条记录"].join("");
-          //把所有轨迹点串成一条线并绘制在地图上
-          if (points.length > 0) {
-            map.setCenter(new AMap.LngLat(points[0].lon, points[0].lat));
-          }
-          let lineArr = new Array();
-          for (var i = 0; i < points.length; i++) {
-            lineArr.push(new AMap.LngLat(points[i].lon, points[i].lat));
-            var polyline = new AMap.Polyline({
-              map: map,
-              path: lineArr,
-              isOutline: false,
-              outlineColor: "#ff0000",
-              strokeColor: "#00ff00",
-              strokeOpacity: 0.35,
-              strokeWeight: 3,
-              strokeStyle: "solid"
-            });
-          }
+        // 读取完成后将文件绘制到地图上
+        reader.onload = function() {
+          drawGPXFile(this.result, map);
         };
       }
-    }
-  }
+
+      // 提示完成
+      this.msg = ["处理完成，累计绘制", recordNum, "条记录"].join("");
+    } // drawTracks
+  } // methods
 };
 </script>
 
