@@ -1,12 +1,21 @@
 var path = require('path')
 var webpack = require('webpack')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+var CleanWebpackPlugin = require('clean-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    // 构建路径
+    path: path.resolve(__dirname, 'dist'),
+    // the public URL of the output directory when referenced in a browser
+    publicPath: './',
     filename: 'build.js'
+  },
+  devServer: {
+    // Tell the server where to serve content from. This is only necessary if you want to serve static files. 
+    // contentBase: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
@@ -16,7 +25,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -73,6 +82,18 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './index.html')
+    }),
+    new CleanWebpackPlugin([
+      'dist'
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/assets'),
+        to: path.resolve(__dirname, 'dist/assets')
+      }
+    ])
   ])
 }

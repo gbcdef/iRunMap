@@ -20,7 +20,8 @@ import mapStyle from "../config/mapStyle";
 export default {
   data() {
     return {
-      msg: ""
+      msg: "",
+      recordCount: 0
     };
   },
 
@@ -34,12 +35,14 @@ export default {
     clearTracks() {
       window.amap.clearMap();
       this.msg = "轨迹已清除";
+      this.recordCount = 0;
     },
 
     drawTracks() {
       let files = document.getElementById("file").files;
       let map = window.amap;
       let recordNum = files.length;
+      this.recordCount += recordNum;
 
       for (let i = 0; i < recordNum; i++) {
         let f = files[i];
@@ -58,7 +61,7 @@ export default {
       }
 
       // 提示完成
-      this.msg = ["处理完成，累计绘制", recordNum, "条记录"].join("");
+      this.msg = ["处理完成，累计绘制", this.recordCount, "条记录"].join("");
     } // drawTracks
   } // methods
 };
